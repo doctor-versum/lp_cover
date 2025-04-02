@@ -14,7 +14,7 @@ This is a small project I created because my **Launchpad** looked kind of boring
 
 ## Installation & Usage  
 
-You need [lp_cover.py](https://github.com/doctor_versum/lp_cover/raw/main/lp_cover.py) and [venv/](https://github.com/doctor_versum/lp_cover/raw/main/venv) for the program to work. I will be adding a pyinstaller exe later on. Stay tuned for updates!  
+You need [lp_cover.py](https://github.com/doctor-versum/lp_cover/blob/main/lp_cover.py) and [venv/](https://github.com/doctor-versum/lp_cover/tree/main/venv) for the program to work. I will be adding a pyinstaller exe later on. Stay tuned for updates!  
 
 ## Demonstration  
 
