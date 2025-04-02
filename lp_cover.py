@@ -250,6 +250,6 @@ if __name__ == '__main__':
     animation_thread.start()
     
     # Tray-Icon
-    menu = (item('Pause/Unpause', toggle_pause), item('Close', exit_program))
+    menu = (item('Pause/Unpause (currently bugged, will crash the program)', toggle_pause), item('Close', exit_program))
     tray_icon = pystray.Icon("lp_cover", create_image(), "LP Cover", menu)
     tray_icon.run()
