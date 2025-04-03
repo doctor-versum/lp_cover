@@ -40,7 +40,7 @@ Since this is a side project, I **do not** guarantee future updates, bug fixes, 
   - Share, copy, modify, and redistribute the material in any medium, format, or platform for non-commercial purposes, as long as you provide proper attribution and share under the same license.
 
 - **Conditions**:
-  - You must give appropriate credit by linking to the original repository at [https://github.com/doctor_versum/lp_cover](https://github.com/doctor_versum/lp_cover).
+  - You must give appropriate credit by linking to the original repository at [https://github.com/doctor-versum/lp_cover](https://github.com/doctor-versum/lp_cover).
   - If you modify and redistribute the code, you must do so under the same **CC BY-NC-SA 4.0** license.
   - **Commercial use is prohibited** under this license. You may not use the material for commercial purposes, including but not limited to selling, offering for sale, or using it in any product or service intended for commercial gain.
 
