@@ -53,4 +53,4 @@ For details, visit the official [CC BY-NC-SA 4.0 license page](https://creativec
 
 ## Thanks to
 
-- tez3998 and hist video about recording output audio [▶️ play on YouTube](https://www.youtube.com/watch?v=7xQAhQWhLHs)
+- tez3998 and his video about recording output audio using python [▶️ play on YouTube](https://www.youtube.com/watch?v=7xQAhQWhLHs)
