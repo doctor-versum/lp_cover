@@ -8,7 +8,6 @@ import numpy as np
 import pystray
 from pystray import MenuItem as item
 from PIL import Image, ImageDraw
-import importlib
 
 # Globale Flags
 paused = False
@@ -18,7 +17,18 @@ active_mode = "audio"  # "audio" oder "fallback"
 last_audio_detection = time.time()  # wird vom Audio-Thread aktualisiert
 lp = None  # Launchpad-Handle
 
-DEFAULT_MAGENTA = (64, 0, 64)
+DEFAULT_COLOR_1 = (64, 0, 64)
+DEFAULT_COLOR_2 = (0, 64, 64)
+
+COLOR_PALETTE = [
+    DEFAULT_COLOR_1,
+    DEFAULT_COLOR_2,
+    (32, 0, 64),
+    (16, 0, 64),
+    (64, 0, 32),
+    (0, 48, 64),   # Hellblauer Ton A
+    (0, 64, 48)    # Hellblauer Ton B
+]
 
 ###############################################
 # Launchpad-Verbindung
@@ -61,12 +71,7 @@ def disconnect_launchpad():
 ###############################################
 def set_peak_pattern():
     # Definiere einige Magenta-/Lilatöne
-    peak_colors = [
-        (64, 0, 64),  # Magenta
-        (32, 0, 64),
-        (16, 0, 64),
-        (64, 0, 32)
-    ]
+    peak_colors = COLOR_PALETTE
     if connected and lp is not None:
         for x in range(9):
             for y in range(9):
@@ -128,7 +133,7 @@ def audio_analysis_loop():
                             try:
                                 for x in range(9):
                                     for y in range(9):
-                                        lp.LedCtrlXY(x, y, *DEFAULT_MAGENTA)
+                                        lp.LedCtrlXY(x, y, *random.choice([DEFAULT_COLOR_1, DEFAULT_COLOR_2]))
                             except Exception as e:
                                 print("Error setting LEDs to magenta:", e)
                         active_mode = "fallback"
@@ -144,21 +149,17 @@ def audio_analysis_loop():
 ###############################################
 def animation_loop():
     global running, paused, connected, lp, active_mode
-    color_options = [
-        (32, 0, 64),
-        (16, 0, 64),
-        (64, 0, 32)
-    ]
-    # Initialisiere die 9x9 LED-Matrix auf DEFAULT_MAGENTA
+    color_options = COLOR_PALETTE[2:]  # Alle Farben außer DEFAULT_COLOR
+    # Initialisiere die 9x9 LED-Matrix auf DEFAULT_COLOR
     current_colors = {}
     if connected and lp is not None:
         for x in range(9):
             for y in range(9):
                 try:
-                    lp.LedCtrlXY(x, y, *DEFAULT_MAGENTA)
+                    lp.LedCtrlXY(x, y, *random.choice([DEFAULT_COLOR_1, DEFAULT_COLOR_2]))
                 except Exception as e:
                     print("Fehler bei LED-Initialisierung:", e)
-                current_colors[(x, y)] = DEFAULT_MAGENTA
+                current_colors[(x, y)] = random.choice([DEFAULT_COLOR_1, DEFAULT_COLOR_2])
     non_magenta_fields = {}  # key: (x,y), value: timestamp
 
     print("Started LED-Animation (Fallback-Modus). Tray-Menü: Pause/Close")
@@ -167,20 +168,20 @@ def animation_loop():
             # Führe die Animation nur aus, wenn kein Audio-Signal (Fallback) aktiv ist
             if active_mode == "fallback":
                 current_time = time.time()
-                # Setze LEDs, die länger als 10 s geändert wurden, zurück auf DEFAULT_MAGENTA
+                # Setze LEDs, die länger als 10 s geändert wurden, zurück auf DEFAULT_COLOR
                 for (x, y), changed_time in list(non_magenta_fields.items()):
                     if current_time - changed_time >= 10:
                         try:
-                            lp.LedCtrlXY(x, y, *DEFAULT_MAGENTA)
+                            lp.LedCtrlXY(x, y, *random.choice([DEFAULT_COLOR_1, DEFAULT_COLOR_2]))
                         except Exception as e:
                             print("Fehler beim Zurücksetzen der LED:", e)
-                        current_colors[(x, y)] = DEFAULT_MAGENTA
+                        current_colors[(x, y)] = random.choice([DEFAULT_COLOR_1, DEFAULT_COLOR_2])
                         del non_magenta_fields[(x, y)]
                 # Wähle einen zufälligen LED und eine zufällige Farbe
                 x = random.randint(0, 8)
                 y = random.randint(0, 8)
                 new_color = random.choice(color_options)
-                if current_colors.get((x, y), DEFAULT_MAGENTA) != new_color:
+                if current_colors.get((x, y), random.choice([DEFAULT_COLOR_1, DEFAULT_COLOR_2])) != new_color:
                     try:
                         lp.LedCtrlXY(x, y, *new_color)
                     except Exception as e:
